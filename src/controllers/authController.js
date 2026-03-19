@@ -2,7 +2,7 @@ const { hashPassword, comparePassword } = require('../utils/passwordUtils');
 const User = require('../models/User');
 const jwt = require('../utils/jwtUtils')
 
-exports.register = async (req, res, next) => {
+exports.register = async (req, res) => {
   try {
     const {
       name,
@@ -49,7 +49,7 @@ exports.register = async (req, res, next) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });

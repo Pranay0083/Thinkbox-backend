@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     }},
   },
   email: { type: String, required: true, validate: {
-    validator: (email) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email),
+    validator: (email) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email),
     message: 'Invalid email address'
   }}
 }, { timestamps: true });

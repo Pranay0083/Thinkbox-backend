@@ -208,4 +208,4 @@ git push origin feature/your-feature
 5. Open a pull request
 
 ## Contact
-For any inquiries, please contact [pranay.vishwakarma7400@gmail.com].
+For any inquiries, please contact [0083pranay@gmail.com].

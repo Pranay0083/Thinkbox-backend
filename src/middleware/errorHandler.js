@@ -1,4 +1,4 @@
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res) => {
   console.error(err.stack);
   if (err.name === 'ValidationError') {
     return res.status(400).json({ message: err.message });
