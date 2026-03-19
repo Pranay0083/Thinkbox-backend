@@ -1,5 +1,18 @@
 const User = require('../models/User');
 
+const ALLOWED_UPDATE_FIELDS = [
+  'name', 'email', 'image', 'expertise', 'bio',
+  'about', 'achievements', 'socialLinks',
+];
+
+function pick(obj, keys) {
+  const result = {};
+  for (const key of keys) {
+    if (obj[key] !== undefined) result[key] = obj[key];
+  }
+  return result;
+}
+
 exports.getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id).select('-password_hash');
@@ -17,7 +30,11 @@ exports.updateUser = async (req, res, next) => {
     if (req.user.id !== req.params.id && req.user.role !== 'admin') {
       return res.status(403).json({ message: 'You can only update your own profile' });
     }
-    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).select('-password_hash');
+    const updates = pick(req.body, ALLOWED_UPDATE_FIELDS);
+    const user = await User.findByIdAndUpdate(req.params.id, updates, {
+      new: true,
+      runValidators: true,
+    }).select('-password_hash');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -41,4 +58,3 @@ exports.deleteUser = async (req, res, next) => {
     next(error);
   }
 };
-

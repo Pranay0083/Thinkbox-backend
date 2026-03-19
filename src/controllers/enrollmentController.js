@@ -16,7 +16,7 @@ exports.createEnrollment = async (req, res, next) => {
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
-    
+
     const existingEnrollment = await Enrollment.findOne({ user: req.user.id, course: course.id });
     if (existingEnrollment) {
       return res.status(400).json({ message: 'Already enrolled in this course' });
@@ -31,7 +31,6 @@ exports.createEnrollment = async (req, res, next) => {
 
 exports.deleteEnrollment = async (req, res, next) => {
   try {
-    console.log(req.user.id)
     const enrollment = await Enrollment.findOneAndDelete({ user: req.user.id, course: req.params.courseId });
     if (!enrollment) {
       return res.status(404).json({ message: 'Enrollment not found' });

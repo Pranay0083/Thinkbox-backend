@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.get('/', courseController.getAllCourses);
 router.get('/:id', courseController.getCourse);
-router.post('/', auth, roleBasedMiddleware(['teacher']), courseController.createCourse);
-router.put('/:id', auth, roleBasedMiddleware(['teacher']), courseController.updateCourse);
-router.delete('/:id', auth, roleBasedMiddleware(['teacher']), courseController.deleteCourse);
+router.post('/', auth, roleBasedMiddleware(['teacher', 'admin']), courseController.createCourse);
+router.put('/:id', auth, roleBasedMiddleware(['teacher', 'admin']), courseController.updateCourse);
+router.delete('/:id', auth, roleBasedMiddleware(['teacher', 'admin']), courseController.deleteCourse);
 
 module.exports = router;

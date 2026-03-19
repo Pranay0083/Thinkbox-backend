@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const logger = require('../utils/logger');
 
 const auth = async (req, res, next) => {
   try {
-    if (!req.header('Authorization')) {
+    const header = req.header('Authorization');
+    if (!header || !header.startsWith('Bearer ')) {
       return res.status(401).json({ message: 'No token provided' });
     }
-    const token = req.header('Authorization').replace('Bearer ', '');
+    const token = header.slice(7);
     if (!token) {
       return res.status(401).json({ message: 'No token provided' });
     }
@@ -19,8 +21,8 @@ const auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.error('Authentication error:', error);
-    res.status(401).json({ message: 'Please authenticate', error: error.message });
+    logger.error({ err: error }, 'Authentication failed');
+    res.status(401).json({ message: 'Please authenticate' });
   }
 };
 
